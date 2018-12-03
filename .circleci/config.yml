@@ -9,7 +9,6 @@ defaults: &defaults
         PGHOST: 127.0.0.1
         PGUSER: postgres
         PG_PASSWORD: password
-        RAILS_ENV: test
 
     - image: circleci/postgres:9.6
       environment:
@@ -59,7 +58,6 @@ jobs:
             mkdir -p /tmp/rspec
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
             bundle exec rspec --profile 10 \
-                              --format RspecJunitFormatter \
                               --out /tmp/rspec/rspec.xml \
                               --format progress \
                               -- \
@@ -67,17 +65,6 @@ jobs:
 
       - store_test_results:
           path: /tmp/rspec
-
-      - run:
-          name: Stash Coverage Results
-          command: |
-            mkdir coverage_results
-            cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
-
-      - persist_to_workspace:
-          root: .
-          paths:
-            - coverage_results
 
   coverage:
     <<: *defaults

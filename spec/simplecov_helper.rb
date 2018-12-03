@@ -2,7 +2,7 @@ require 'active_support/inflector'
 require 'simplecov'
 
 class SimpleCovHelper
-  def self.report_coverage(base_dir: './coverage_results')
+  def self.report_coverage(base_dir: './coverage_results') # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     SimpleCov.start 'rails' do
       skip_check_coverage = ActiveModel::Type::Boolean.new.cast(
         ENV.fetch('SKIP_COVERAGE_CHECK', 'false')
