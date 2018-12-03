@@ -1,0 +1,22 @@
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - 'config/**/*'
+    - 'db/**/*'
+    - 'script/**/*'
+    - 'bin/**/*'
+    - 'vendor/**/*'
+    - 'log/**/*'
+    - 'test/**/*'
+    - 'Gemfile'
+    - 'app/jobs/login_job.rb'
+Metrics/LineLength:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/MutableConstant:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
