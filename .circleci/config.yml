@@ -1,0 +1,116 @@
+defaults: &defaults
+  working_directory: ~/taggd-lite
+  parallelism: 2
+
+  docker:
+    - image: circleci/ruby:2.5.1-node-browsers
+      environment:
+        RAILS_ENV: test
+        PGHOST: 127.0.0.1
+        PGUSER: postgres
+        PG_PASSWORD: password
+        RAILS_ENV: test
+
+    - image: circleci/postgres:9.6
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_DB: taggd-lite_test
+        POSTGRES_PASSWORD: password
+
+version: 2
+jobs:
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+
+      - save_cache:
+          key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/taggd-lite
+
+      - restore_cache:
+          keys:
+            - gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - gem-cache-{{ arch }}-{{ .Branch }}
+            - gem-cache
+      - run: bundle install --path vendor/bundle
+      - save_cache:
+          key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - ~/taggd-lite/vendor/bundle
+
+      # Rubocop
+      - run: bundle exec rubocop
+
+      # Wait for DB
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      # Database setup
+      - run: cp config/database.yml.example config/database.yml
+      - run: bundle exec rake db:schema:load
+
+      - run: 
+          name: Parallel Rspec
+          environment:
+            - RAILS_ENV: test
+            - RACK_ENV: test
+          command: |
+            mkdir -p /tmp/rspec
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out /tmp/rspec/rspec.xml \
+                              --format progress \
+                              -- \
+                              $TEST_FILES
+
+      - store_test_results:
+          path: /tmp/rspec
+
+      - run:
+          name: Stash Coverage Results
+          command: |
+            mkdir coverage_results
+            cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage_results
+
+  coverage:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: .
+
+      - restore_cache:
+          key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
+
+      - restore_cache:
+          keys:
+            - gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - gem-cache-{{ arch }}-{{ .Branch }}
+            - gem-cache
+
+      - run: bundle install --path vendor/bundle
+
+      - run:
+          name: Merge and check coverage
+          command: |
+            cp config/database.yml.example config/database.yml
+            RUN_COVERAGE=true bundle exec rake simplecov:report_coverage
+
+      - store_artifacts:
+          path: ~/taggd-lite/coverage
+          destination: coverage
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+        - test
+        - coverage:
+            requires: 
+              - test
