@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :retailers, controllers: {
-    omniauth_callbacks: 'retailers/omniauth_callbacks'
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
   root 'pages#index'
