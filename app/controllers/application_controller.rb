@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def verify_user_steps!
     return if devise_controller?
-    return unless user_signed_in?
+    # return unless user_signed_in?
     # return unless current_user.business_accounts.empty? # Example
     redirect_to after_signup_path(:business_account)
   end
