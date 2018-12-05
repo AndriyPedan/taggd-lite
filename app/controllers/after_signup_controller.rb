@@ -24,7 +24,7 @@ class AfterSignupController < ApplicationController
 
   private
 
-  def redirect_to_finish_wizard(options, params)
+  def redirect_to_finish_wizard(_options, _params)
     redirect_to root_path, notice: 'Thank you for signing up.'
   end
 

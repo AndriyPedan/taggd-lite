@@ -11,4 +11,10 @@ class User < ApplicationRecord
       user.name = auth.info.name
     end
   end
+
+  private
+
+  def password_required?
+    false
+  end
 end
