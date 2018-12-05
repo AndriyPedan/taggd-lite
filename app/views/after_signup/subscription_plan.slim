@@ -1,3 +1,9 @@
 h1 Subscription plan
 
+- @plans.each do |plan|
+  .plan
+    h2 = plan['name']
+    span = price(plan)
+    = link_to 'Subscribe', wizard_path(:subscription_plan, user: { plan: plan['name'] }), method: :put
+
 = link_to 'Next', next_wizard_path

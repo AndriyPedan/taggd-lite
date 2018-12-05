@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_05_112914) do
+ActiveRecord::Schema.define(version: 2018_12_05_123841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,20 @@ ActiveRecord::Schema.define(version: 2018_12_05_112914) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "current"
     t.index ["user_id"], name: "index_retailers_on_user_id"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "retailer_id"
+    t.string "plan_token", null: false
+    t.string "card_token"
+    t.string "customer_token"
+    t.integer "type"
+    t.boolean "active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["retailer_id"], name: "index_subscriptions_on_retailer_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|

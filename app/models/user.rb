@@ -7,6 +7,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
 
+  has_many :retailers
+  has_one :current_retailer, -> { where(current: true) }, class_name: 'Retailer'
+
+  accepts_nested_attributes_for :current_retailer
+
   def self.from_omniauth(auth)
     where(uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email

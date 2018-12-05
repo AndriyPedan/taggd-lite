@@ -10,6 +10,7 @@ class AfterSignupController < ApplicationController
     case step
     when :business_account
     when :subscription_plan
+      @plans ||= Pin::Plan.all.sort { |plan| plan['amount'].to_i }
     when :card_addition
     end
 
