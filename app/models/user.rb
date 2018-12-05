@@ -1,8 +1,6 @@
 class User < ApplicationRecord
   has_many :retailers
 
-  after_commit :update_business_accounts
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
@@ -25,18 +23,5 @@ class User < ApplicationRecord
 
   def password_required?
     false
-  end
-
-  def update_business_accounts
-    FacebookService.new(token).business_accounts.each do |business_account|
-      retailers.find_or_create_by(business_id: business_account['id']) do |retailer|
-        retailer.update_attributes(
-          username: business_account['username'],
-          name: business_account['name'],
-          business_id: business_account['id'],
-          token: business_account['token']
-        )
-      end
-    end
   end
 end
