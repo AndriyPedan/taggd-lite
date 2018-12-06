@@ -24,7 +24,7 @@ gem 'jquery-rails'
 gem 'elementaljs-rails'
 
 group :development, :test do
-  gem 'pry'
+  gem 'pry-rails'
   gem 'rubocop'
 end
 

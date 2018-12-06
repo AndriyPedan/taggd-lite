@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   def verify_user_steps!
     return if devise_controller?
+
     # return unless user_signed_in?
     # return if current_user && current_user.retailers.present?
 

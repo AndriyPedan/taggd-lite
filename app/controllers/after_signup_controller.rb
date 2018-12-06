@@ -5,12 +5,11 @@ class AfterSignupController < ApplicationController
 
   steps :business_account, :subscription_plan, :card_addition
 
-
   def show
     @user = current_user
     case step
     when :business_account
-      @retailers = RetailerService.new({token: current_user.token}).build_retailers
+      @retailers = RetailerService.new(token: current_user.token).build_retailers
     when :subscription_plan
       @plans ||= Pin::Plan.all.sort { |plan| plan['amount'].to_i }
     when :card_addition
@@ -23,7 +22,7 @@ class AfterSignupController < ApplicationController
     @user = current_user
     case step
     when :business_account
-      RetailerService.new({user: current_user, params: params}).set_retailer
+      RetailerService.new(user: current_user, params: params).set_retailer
     end
     render_wizard @user
   end
