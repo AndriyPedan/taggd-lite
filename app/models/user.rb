@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :retailers
   has_one :current_retailer, -> { where(current: true) }, class_name: 'Retailer'
 
-  accepts_nested_attributes_for :current_retailer
+  accepts_nested_attributes_for :retailers
 
   def self.from_omniauth(auth)
     where(uid: auth.uid).first_or_create do |user|

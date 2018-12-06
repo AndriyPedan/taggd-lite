@@ -1,5 +1,7 @@
 h1 Business account
 
-= select_tag :business_id, options_from_collection_for_select(@retailers, "id", "name")
+= form_for @user, url: wizard_path, method: :put do |f|
+  = f.fields_for current_user.retailers.new do |r|
+    = r.select :business_id, options_for_select(@retailers)
 
-= link_to 'Next', next_wizard_path
+    = f.submit 'Next'
