@@ -1,7 +1,8 @@
 Devise.setup do |config|
 
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
-  config.omniauth :facebook, Rails.application.credentials[:facebook_id], Rails.application.credentials[:facebook_secret], token_params: { parse: :json }
+  config.omniauth :facebook, Rails.application.credentials[:facebook_id], Rails.application.credentials[:facebook_secret], token_params: { parse: :json },
+  scope: 'email,manage_pages,instagram_basic,instagram_manage_comments,instagram_manage_insights'
 
   require 'devise/orm/active_record'
 

@@ -1,5 +1,6 @@
 class Retailer < ApplicationRecord
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: %i[facebook]
+  belongs_to :user
+  has_one :subscription, dependent: :destroy
+
+  accepts_nested_attributes_for :subscription
 end

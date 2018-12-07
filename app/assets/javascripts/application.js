@@ -11,6 +11,14 @@
 // about supported directives.
 //
 //= require rails-ujs
+//= require jquery
+//= require jquery_ujs
+//= require elemental
 //= require activestorage
 //= require turbolinks
+//= require behaviors/card-form
 //= require_tree .
+
+$(document).on('turbolinks:load', function() {
+  Elemental.load(document);
+});
