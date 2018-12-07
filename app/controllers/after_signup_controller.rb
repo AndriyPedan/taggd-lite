@@ -13,7 +13,7 @@ class AfterSignupController < ApplicationController
       @retailers = RetailerService.new(token: current_user.token).build_retailers
     when :subscription_plan
       @plans ||= Pin::Plan.all.sort { |plan| plan['amount'].to_i }
-    when :card_addition
+    when :card_addition # rubocop:disable Lint/EmptyWhen
     end
 
     render_wizard
@@ -37,6 +37,6 @@ class AfterSignupController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, current_retailer_attributes: [:id, subscription_attributes: [:plan_token, :plan_type]])
+    params.require(:user).permit(:email, current_retailer_attributes: [:id, subscription_attributes: %i[plan_token plan_type]])
   end
 end
