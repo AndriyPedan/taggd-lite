@@ -7,9 +7,8 @@ class User < ApplicationRecord
   has_one :current_retailer, -> { where(current: true) }, class_name: 'Retailer'
   has_one :subscription, through: :current_retailer
 
-  after_commit :update_business_accounts
-
   accepts_nested_attributes_for :retailers
+  accepts_nested_attributes_for :current_retailer
 
   def self.from_omniauth(auth)
     where(uid: auth.uid).first_or_create do |user|
