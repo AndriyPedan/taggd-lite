@@ -1,9 +1,10 @@
 class AfterSignupController < ApplicationController
-  before_action :authenticate_user!
-  skip_before_action :verify_user_steps!
   include Wicked::Wizard
 
-  steps :business_account, :subscription_plan, :card_addition
+  before_action :authenticate_user!
+  skip_before_action :verify_user_steps!
+
+  steps :business_account, :subscription_plan, :card_addition, :finish
 
   def show
     @user = current_user
@@ -23,6 +24,8 @@ class AfterSignupController < ApplicationController
     case step
     when :business_account
       RetailerService.new(user: current_user, params: params).set_retailer
+    when :subscription_plan
+      @user.assign_attributes(user_params)
     end
     render_wizard @user
   end
@@ -33,9 +36,7 @@ class AfterSignupController < ApplicationController
     redirect_to root_path, notice: 'Thank you for signing up.'
   end
 
-  # TODO:
-  # Accept nested attributes
   def user_params
-    params.require(:user).permit(:email)
+    params.require(:user).permit(:email, current_retailer_attributes: [:id, subscription_attributes: [:plan_token, :plan_type]])
   end
 end

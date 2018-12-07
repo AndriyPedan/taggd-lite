@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_06_085548) do
+ActiveRecord::Schema.define(version: 2018_12_06_122507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,10 +32,11 @@ ActiveRecord::Schema.define(version: 2018_12_06_085548) do
     t.string "plan_token", null: false
     t.string "card_token"
     t.string "customer_token"
-    t.integer "type"
+    t.integer "plan_type"
     t.boolean "active", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "subscription_token"
     t.index ["retailer_id"], name: "index_subscriptions_on_retailer_id", unique: true
   end
 

@@ -1,12 +1,13 @@
 class User < ApplicationRecord
-  has_many :retailers
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
 
-  has_many :retailers
+  has_many :retailers, dependent: :destroy
   has_one :current_retailer, -> { where(current: true) }, class_name: 'Retailer'
+  has_one :subscription, through: :current_retailer
+
+  after_commit :update_business_accounts
 
   accepts_nested_attributes_for :retailers
 

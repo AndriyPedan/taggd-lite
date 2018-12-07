@@ -13,11 +13,20 @@ TaggdLite = cardForm: (element) ->
   errorHeading = errorContainer.find('h3')
 
   handleSuccess = (card) ->
-    # $('<input>')
-    #   .attr({type: 'hidden', name: 'card_token'})
-    #   .val(card.token)
-    #   .appendTo(form);
-    form.get(0).submit()
+    $.ajax({
+      method: 'POST',
+      url: '/subscriptions'
+      data: { email: $('#email').val(), card_token: card.token },
+      success: (response) ->
+        errors = response.errors
+        if (errors.length > 0)
+          $.each errors, (index, error) ->
+            $('<li>').text(error).appendTo errorList
+          errorContainer.show()
+          submitButton.removeAttr 'disabled'
+        else
+          window.location.href = response.url
+    })
 
   handleError = (response) ->
     errorHeading.text response.error_description

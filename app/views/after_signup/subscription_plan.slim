@@ -4,6 +4,6 @@ h1 Subscription plan
   .plan
     h2 = plan['name']
     span = price(plan)
-    = link_to 'Subscribe', wizard_path(:subscription_plan, user: { plan: plan['name'] }), method: :put
+    = link_to 'Subscribe', wizard_path(:subscription_plan, user: { current_retailer_attributes: { id: current_user.current_retailer.id, subscription_attributes: { plan_token: plan['token'], plan_type: plan['name'].split.first.downcase } } }), method: :put
 
 = link_to 'Next', next_wizard_path
