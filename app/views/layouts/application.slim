@@ -1,0 +1,8 @@
+doctype html
+html
+  == render 'application/head'
+  body
+    = render 'application/header'
+    main.container
+      = render 'application/flash_messages'
+      == yield
