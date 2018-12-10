@@ -8,7 +8,8 @@ class Video < Media
       created_time: hash['timestamp'],
       permalink: hash['permalink'],
       username: hash['username'],
-      instagram_id: hash['id']
+      instagram_id: hash['id'],
+      media_type: hash['media_type']
     )
   end
 end

@@ -7,7 +7,8 @@ class CarouselAlbum < Media
       created_time: hash['timestamp'],
       permalink: hash['permalink'],
       username: hash['username'],
-      instagram_id: hash['carousel_item']['id']
+      instagram_id: hash['carousel_item']['id'],
+      media_type: hash['carousel_item']['media_type']
     )
   end
 end

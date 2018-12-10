@@ -1,5 +1,8 @@
 .col-md-4
   .card.mb-4.shadow-sm
-    = image_tag media.media_url, class: 'card-img-top', style: "height: 225px; width: 100%; display: block;"
+    - if media.media_type == 'IMAGE'
+      = image_tag media.media_url, class: 'card-img-top', style: "height: 225px; width: 100%; display: block;"
+    - if media.media_type == 'VIDEO'
+      = video_tag media.media_url, class: 'card-img-top', style: "height: 225px; width: 100%; display: block;", controls: true
     .card-body
       p.card-text = media.caption

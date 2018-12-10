@@ -1,6 +1,6 @@
 class FacebookService
   ACCOUNT_FIELDS = 'name,access_token,instagram_business_account{website,username,name}'.freeze
-  MEDIA_FIELDS = 'caption,like_count,media_url,media_type,ig_id,permalink,thumbnail_url,timestamp,username,children{media_url}&limit=all'.freeze
+  MEDIA_FIELDS = 'caption,like_count,media_url,media_type,ig_id,permalink,thumbnail_url,timestamp,username,children{media_url,media_type,thumbnail_url}&limit=all'.freeze
 
   attr_reader :access_token
 

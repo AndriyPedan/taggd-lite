@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_08_133609) do
+ActiveRecord::Schema.define(version: 2018_12_10_164829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,9 @@ ActiveRecord::Schema.define(version: 2018_12_08_133609) do
     t.string "caption"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "media_type"
+    t.bigint "retailer_id"
+    t.index ["retailer_id"], name: "index_media_on_retailer_id"
   end
 
   create_table "retailers", force: :cascade do |t|
@@ -86,4 +89,5 @@ ActiveRecord::Schema.define(version: 2018_12_08_133609) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "media", "retailers"
 end
