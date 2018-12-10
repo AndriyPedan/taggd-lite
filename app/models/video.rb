@@ -1,5 +1,5 @@
 class Video < Media
-  def self.from_hash(hash)
+  def self.from_hash(hash) # rubocop:disable Metrics/MethodLength
     new(
       status: hash['status'],
       media_url: hash['media_url'],

@@ -9,7 +9,7 @@ class Dashboard::InstagramMediaController < ApplicationController
     @media = build_media
     current_retailer.media << @media
     if @media.save
-      redirect_to dashboard_media_index_path(status: @media.status), notice: "Media was successfully saved."
+      redirect_to dashboard_media_index_path(status: @media.status), notice: 'Media was successfully saved.'
     else
       render :new
     end
