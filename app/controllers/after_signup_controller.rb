@@ -23,7 +23,7 @@ class AfterSignupController < ApplicationController
     @user = current_user
     case step
     when :business_account
-      RetailerService.new(user: current_user, params: params).set_retailer
+      RetailerService.new(user: current_user, params: params[:user][:retailer][:business_id]).set_retailer
     when :subscription_plan
       @user.assign_attributes(user_params)
     end

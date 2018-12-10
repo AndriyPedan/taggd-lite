@@ -16,6 +16,6 @@ class RetailerService < BaseService
   private
 
   def retailer_params
-    JSON.parse(params[:user][:retailer][:business_id])
+    JSON.parse(params)
   end
 end
