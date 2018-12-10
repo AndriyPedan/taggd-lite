@@ -3,32 +3,44 @@ h1 Card addition
   .errors style="display:none"
     h3
     ul
-  fieldset
+  .form-row
     legend Billing
-    label for='email' Email
-    input#email name='email'
-    label for="address-line1"  Address 1
-    input#address-line1
-    label for="address-line2"  Address 2
-    input#address-line2
-    label for="address-city"  City
-    input#address-city
-    label for="address-state"  State
-    input#address-state
-    label for="address-postcode"  Postcode
-    input#address-postcode
-    label for="address-country"  Country
-    input#address-country
-  fieldset
+    .form-group.col-4
+      label for='email' Email
+      = email_field_tag(:email, '', { id: 'email', class: 'form-control' })
+    .form-group.col-4
+      label for="address-line1"  Address 1
+      = text_field_tag(nil, nil, { id: 'address-line1', class: 'form-control' })
+    .form-group.col-4
+      label for="address-line2"  Address 2
+      = text_field_tag(nil, nil, { id: 'address-line2', class: 'form-control' })
+    .form-group.col-4
+      label for="address-city"  City
+      = text_field_tag(nil, nil, { id: 'address-city', class: 'form-control' })
+    .form-group.col-2
+      label for="address-state"  State
+      = text_field_tag(nil, nil, { id: 'address-state', class: 'form-control' })
+    .form-group.col-2
+      label for="address-postcode"  Postcode
+      = text_field_tag(nil, nil, { id: 'address-postcode', class: 'form-control' })
+    .form-group.col-4
+      label for="address-country"  Country
+      = text_field_tag(nil, nil, { id: 'address-country', class: 'form-control' })
+  .form-row
     legend Payment
-    label for="cc-number"  Credit Card Number
-    input#cc-number type="text"
-    label for="cc-name"  Name on Card
-    input#cc-name type="text"
-    label for="cc-expiry-month"  Expiry Month
-    input#cc-expiry-month
-    label for="cc-expiry-year"  Expiry Year
-    input#cc-expiry-year
-    label for="cc-cvc"  CVC
-    input#cc-cvc
-  input type="submit" value=("Pay now")
+    .form-group.col-6
+      label for="cc-number"  Credit Card Number
+      = text_field_tag(nil, nil, { id: 'cc-number', class: 'form-control' })
+    .form-group.col-6
+      label for="cc-name"  Name on Card
+      = text_field_tag(nil, nil, { id: 'cc-name', class: 'form-control' })
+    .form-group.col-4
+      label for="cc-expiry-month"  Expiry Month
+      = text_field_tag(nil, nil, { id: 'cc-expiry-month', class: 'form-control' })
+    .form-group.col-4
+      label for="cc-expiry-year"  Expiry Year
+      = text_field_tag(nil, nil, { id: 'cc-expiry-year', class: 'form-control' })
+    .form-group.col-4
+      label for="cc-cvc"  CVC
+      = text_field_tag(nil, nil, { id: 'cc-cvc', class: 'form-control' })
+  = submit_tag('Save Changes', { class: 'btn' })

@@ -22,7 +22,7 @@ class SubscriptionService
   end
 
   def update_tokens
-    if @customer_token
+    if customer_token
       @customer = Pin::Customer.update(@customer_token,
                                        card_token: @params[:card_token], email: @params[:email])
     else
@@ -35,7 +35,7 @@ class SubscriptionService
     pin_response = Pin::Subscription.create(plan_token: @subscription.plan_token,
                                             customer_token: @customer['token'],
                                             card_token: @customer['card']['token'])
-    @subscription.update(card_token: @customer['card']['token'], subscription_token: pin_response[:token])
+    @subscription.update(card_token: @customer['card']['token'], subscription_token: pin_response['token'])
   end
 
   def customer_token
