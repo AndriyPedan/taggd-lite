@@ -7,4 +7,9 @@ Rails.application.routes.draw do
 
   resources :after_signup, only: %i(show update)
   resources :subscriptions, only: :create
+
+  namespace :dashboard do
+    resources :instagram_media, only: [:index, :create]
+    resources :media
+  end
 end

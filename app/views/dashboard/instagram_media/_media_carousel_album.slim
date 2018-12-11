@@ -1,0 +1,13 @@
+- media['children']['data'].each do |carousel_item|
+  .col-md-4
+    .card.mb-4.shadow-sm
+      - if carousel_item['media_type'] == 'IMAGE'
+        = image_tag carousel_item['media_url'], class: 'card-img-top', style: "height: 225px; width: 100%; display: block;"
+      - if carousel_item['media_type'] == 'VIDEO'
+        = video_tag carousel_item['media_url'], class: 'card-img-top', style: "height: 225px; width: 100%; display: block;", controls: true
+      .card-body
+        p.card-text = media['caption']
+        .d-flex.justify-content-between.align-items-center
+          .btn-group
+            = button_to 'Accept', {params: { media: media.merge(carousel_item: carousel_item), status: :active }}, { class: 'btn btn-sm btn-outline-secondary' }
+            = button_to 'Reject', {params: { media: media.merge(carousel_item: carousel_item), status: :rejected }}, { class: 'btn btn-sm btn-outline-secondary' }
