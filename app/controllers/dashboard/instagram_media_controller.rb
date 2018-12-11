@@ -1,6 +1,4 @@
 class Dashboard::InstagramMediaController < ApplicationController
-  # skip_before_action :verify_user_steps!
-
   def index
     @media = MediaService.new(token: facebook_token, business_id: business_id).facebook_media_hash
   end
@@ -11,7 +9,7 @@ class Dashboard::InstagramMediaController < ApplicationController
     if @media.save
       redirect_to dashboard_media_index_path(status: @media.status), notice: 'Media was successfully saved.'
     else
-      render :new
+      redirect_to dashboard_instagram_media_path, alert: 'Something went wrong'
     end
   end
 

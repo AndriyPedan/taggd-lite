@@ -5,5 +5,6 @@ FactoryBot.define do
     business_id { FFaker::IdentificationBR.cnpj }
     token { FFaker::IdentificationBR.cnpj }
     current { true }
+    user
   end
 end
