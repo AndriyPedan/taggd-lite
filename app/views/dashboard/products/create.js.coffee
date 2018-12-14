@@ -1,0 +1,8 @@
+$('[data-products]').prepend("<%= j(render partial: 'product', locals: { product: @product }) %>")
+$('.is-valid').removeClass('is-valid')
+$('[data-preview]').attr('src', '')
+$(':input','[data-product-form]')
+  .not(':button, :submit, :reset, :hidden')
+  .val('')
+  .prop('checked', false)
+  .prop('selected', false)

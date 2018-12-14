@@ -1,5 +1,6 @@
 class Media < ApplicationRecord
   belongs_to :retailer
+  has_many :products
 
   enum status: { pending: 0, active: 1, rejected: 2 }
 

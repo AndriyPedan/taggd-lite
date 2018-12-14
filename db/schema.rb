@@ -10,10 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_10_164829) do
+ActiveRecord::Schema.define(version: 2018_12_13_091035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.bigint "parent_id"
+    t.bigint "retailer_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_categories_on_parent_id"
+    t.index ["retailer_id"], name: "index_categories_on_retailer_id"
+  end
+
+  create_table "categories_products", id: false, force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.bigint "product_id", null: false
+    t.index ["category_id", "product_id"], name: "index_categories_products_on_category_id_and_product_id"
+  end
 
   create_table "media", force: :cascade do |t|
     t.string "type"
@@ -32,6 +48,25 @@ ActiveRecord::Schema.define(version: 2018_12_10_164829) do
     t.string "media_type"
     t.bigint "retailer_id"
     t.index ["retailer_id"], name: "index_media_on_retailer_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.bigint "media_id"
+    t.string "external_id"
+    t.text "canonical_url"
+    t.text "provider_url"
+    t.text "image_url"
+    t.decimal "price", precision: 8, scale: 2
+    t.decimal "original_price", precision: 8, scale: 2
+    t.string "currency"
+    t.string "description"
+    t.integer "gender"
+    t.string "brand"
+    t.string "availability"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["media_id"], name: "index_products_on_media_id"
   end
 
   create_table "retailers", force: :cascade do |t|

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   namespace :dashboard do
     resources :instagram_media, only: [:index, :create]
-    resources :media
+    resources :media do
+      resources :products
+    end
   end
 end
