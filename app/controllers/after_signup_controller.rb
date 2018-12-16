@@ -8,12 +8,12 @@ class AfterSignupController < ApplicationController
 
   def show
     @user = current_user
+    skip_steps
     case step
     when :business_account
-      @retailers = RetailerService.new(token: current_user.token).build_retailers
+      @retailers ||= retailers
     when :subscription_plan
-      @plans ||= Pin::Plan.all.sort { |plan| plan['amount'].to_i }
-    when :card_addition # rubocop:disable Lint/EmptyWhen
+      @plans ||= plans
     end
 
     render_wizard
@@ -38,5 +38,22 @@ class AfterSignupController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, current_retailer_attributes: [:id, subscription_attributes: %i[plan_token plan_type]])
+  end
+
+  def retailers
+    RetailerService.new(token: current_user.token).build_retailers
+  end
+
+  def plans
+    Pin::Plan.all.sort { |plan| plan['amount'].to_i }
+  end
+
+  def skip_steps
+    case step
+    when :business_account
+      skip_step if current_retailer
+    when :subscription_plan, :card_addition
+      skip_step if active_subsciption?
+    end
   end
 end
