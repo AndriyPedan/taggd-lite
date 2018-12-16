@@ -5,5 +5,5 @@
       p.card-text = media['caption']
       .d-flex.justify-content-between.align-items-center
         .btn-group
-          = button_to 'Accept', {params: { media: media, status: :active }}, { class: 'btn btn-sm btn-outline-secondary' }
-          = button_to 'Reject', {params: { media: media, status: :rejected }}, { class: 'btn btn-sm btn-outline-secondary' }
+          = button_to 'Accept', dashboard_instagram_media_path({ media: media, status: :active }), { class: 'btn btn-sm btn-outline-secondary' }
+          = button_to 'Reject', dashboard_instagram_media_path({ media: media, status: :rejected }), { class: 'btn btn-sm btn-outline-secondary' }
