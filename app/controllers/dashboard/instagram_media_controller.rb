@@ -27,10 +27,6 @@ class Dashboard::InstagramMediaController < ApplicationController
     current_user.token
   end
 
-  def current_retailer
-    current_user.current_retailer
-  end
-
   def business_id
     current_retailer.business_id
   end

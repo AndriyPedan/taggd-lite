@@ -6,6 +6,7 @@ RSpec.describe Dashboard::MediaController, type: :controller do
 
   describe 'GET index' do
     before do
+      allow(controller).to receive(:active_subsciption?).and_return(true)
       get :index, params: params
     end
 

@@ -16,6 +16,7 @@ RSpec.describe Dashboard::InstagramMediaController, type: :controller do
 
   before do
     allow(controller).to receive(:current_user).and_return(retailer.user)
+    allow(controller).to receive(:active_subsciption?).and_return(true)
   end
 
   describe 'GET index' do

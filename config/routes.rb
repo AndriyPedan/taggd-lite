@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    omniauth_callbacks: 'users/omniauth_callbacks'
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: 'users/sessions',
   }
 
-  root 'pages#index'
+  root 'dashboard/instagram_media#index'
 
   resources :after_signup, only: %i(show update)
   resources :subscriptions, only: :create
