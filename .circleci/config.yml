@@ -34,6 +34,13 @@ jobs:
             - gem-cache-{{ arch }}-{{ .Branch }}
             - gem-cache
       - run: bundle install --path vendor/bundle
+      - run:
+          name: Install Latest Browsers
+          command: |
+            wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+            sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+            sudo apt-get update
+            sudo apt-get install google-chrome-stable
       - save_cache:
           key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
@@ -49,7 +56,7 @@ jobs:
       - run: cp config/database.yml.example config/database.yml
       - run: bundle exec rake db:schema:load
 
-      - run: 
+      - run:
           name: Parallel Rspec
           environment:
             - RAILS_ENV: test
@@ -99,5 +106,5 @@ workflows:
     jobs:
         - test
         - coverage:
-            requires: 
+            requires:
               - test

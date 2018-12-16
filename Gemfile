@@ -40,9 +40,12 @@ group :development do
 end
 
 group :test do
+  gem 'capybara'
+  gem 'chromedriver-helper'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'ffaker'
+  gem 'selenium-webdriver'
   gem 'simplecov'
   gem 'rails-controller-testing'
 end
