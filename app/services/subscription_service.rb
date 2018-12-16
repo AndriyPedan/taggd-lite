@@ -35,7 +35,7 @@ class SubscriptionService
     pin_response = Pin::Subscription.create(plan_token: @subscription.plan_token,
                                             customer_token: @customer['token'],
                                             card_token: @customer['card']['token'])
-    @subscription.update(card_token: @customer['card']['token'], subscription_token: pin_response['token'])
+    @subscription.update(card_token: @customer['card']['token'], subscription_token: pin_response['token'], active: true)
   end
 
   def customer_token

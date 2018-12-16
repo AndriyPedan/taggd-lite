@@ -20,6 +20,7 @@
 //= require activestorage
 //= require turbolinks
 //= require behaviors/card-form
+//= require behaviors/image-input
 //= require_tree .
 
 $(document).on('turbolinks:load', function() {

@@ -26,6 +26,9 @@ gem 'wicked'
 gem 'pin_up'
 gem 'jquery-rails'
 gem 'elementaljs-rails'
+gem 'simple_form'
+gem 'httparty'
+gem 'nokogiri'
 
 group :development, :test do
   gem 'pry-rails'

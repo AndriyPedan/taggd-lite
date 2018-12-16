@@ -1,0 +1,25 @@
+.row.border.border-secondary.rounded.mb-3.p-2 data-product="#{product.id}"
+  .col-md-4
+    = image_tag product.image_url, class: 'img-fluid' if product.image_url
+  .col-md-8
+    .row
+      p.font-weight-bold = product.name
+    .row
+      span.font-weight-bold Price:
+      span = "#{product.price} #{product.currency}"
+    .row
+      span.font-weight-bold Brand:
+      span = product.brand
+    .row
+      span.font-weight-bold Categories:
+      p = product.categories.map(&:name).join(', ')
+    .row
+      span.font-weight-bold Gender:
+      p = product.gender
+    - if product.description.present?
+      .row
+        span.font-weight-bold Description:
+        p = product.description
+    .row.d-block.text-right
+      = link_to 'To Shop', product.canonical_url, class: 'btn btn-secondary mr-3', target: :_blank
+      = link_to 'Remove', dashboard_media_product_path(product.media, product), method: :delete, remote: true, class: 'btn btn-danger'

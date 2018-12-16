@@ -1,0 +1,33 @@
+.row
+  .col-md-6
+    = image_tag @media.media_url, class: 'img-fluid'
+    span = @media.caption
+    h2 Products:
+    div data-products=''
+      = render partial: 'product', collection: @media.products.persisted
+  .col-md-6
+    = simple_form_for(@product, url: new_dashboard_media_product_path, method: :get) do |f|
+      = f.input :provider_url, as: :string
+      = f.button :submit, 'Lookup Product'
+    = simple_form_for(@product, url: dashboard_media_products_path, remote: true, html: { data: { product_form: '' } }) do |f|
+      = f.input :name
+      = f.input :description, as: :text
+      .row
+        .col-4
+          = f.input :price
+        .col-4
+          = f.input :original_price
+        .col-4
+          = f.input :currency
+      = f.input :image_url, as: :string, input_html: { data: { behavior: 'imageInput' } }
+      img data-preview=''
+      = f.input :canonical_url, as: :string
+      .row
+        .col-4
+          = f.input :brand
+        .col-4
+          = f.input :availability
+        .col-4
+          = f.input :gender, collection: Product.genders.keys, include_blank: false
+      = f.association :categories, as: :check_boxes
+      = f.button :submit
