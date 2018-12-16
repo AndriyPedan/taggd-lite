@@ -48,7 +48,6 @@ RSpec.describe Dashboard::ProductsController, type: :controller do
 
     before { delete :destroy, params: { media_id: media.id, id: product.id }, xhr: true }
 
-
     it { expect(media.products.count).to eq(0) }
     it { expect(response).to have_http_status(200) }
   end

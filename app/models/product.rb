@@ -4,7 +4,7 @@ class Product < ApplicationRecord
 
   scope :persisted, -> { where.not(id: nil) }
 
-  enum gender: %i(any male female)
+  enum gender: %i[any male female]
 
   validates :name, :price, :currency, presence: true
 end
