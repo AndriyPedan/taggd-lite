@@ -17,6 +17,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 
+gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'bootstrap', '~> 4.1.3'
 gem 'font-awesome-rails'
 gem 'jquery-rails'
