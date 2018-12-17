@@ -5,6 +5,10 @@ ul.nav.nav-pills
     = link_to 'Active', dashboard_media_index_path(status: :active), class: "nav-link #{current_class?(dashboard_media_index_path(status: :active))}"
   li.nav-item
     = link_to 'Rejected', dashboard_media_index_path(status: :rejected), class: "nav-link #{current_class?(dashboard_media_index_path(status: :rejected))}"
-.row
-  - @media.each do |media|
-    = render "media_#{media['media_type'].downcase}", media: media
+  = form_tag batch_action_dashboard_instagram_media_path do
+    .row
+      - @media.each do |media|
+        = render "media_#{media['media_type'].downcase}", media: media
+    .row
+      = submit_tag 'Accept selected', class: 'btn btn-success'
+      = submit_tag 'Reject selected', class: 'btn btn-danger'
