@@ -1,14 +1,22 @@
 nav.navbar.navbar-expand-md.navbar-dark.bg-dark.mb-4
-  a.navbar-brand href="#"  Tagged
-  button.navbar-toggler.collapsed aria-controls="navbarCollapse" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarCollapse" data-toggle="collapse" type="button" 
-    span.navbar-toggler-icon
-  #navbarCollapse.navbar-collapse.collapse style="" 
-    ul.navbar-nav.mr-auto
-      li.nav-item.active
-        a.nav-link href="#" 
-          | Home
-          span.sr-only (current)
-      li.nav-item
-        a.nav-link href="#"  Link
-      li.nav-item
-        a.nav-link.disabled href="#"  Disabled
+  .container
+    a.navbar-brand href="#"  Tagged
+    button.navbar-toggler.collapsed aria-controls="navbarCollapse" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarCollapse" data-toggle="collapse" type="button"
+      span.navbar-toggler-icon
+    #navbarCollapse.navbar-collapse.collapse style=""
+      ul.navbar-nav.mr-auto
+        li.nav-item.active
+          a.nav-link href="#"
+            | Home
+            span.sr-only (current)
+        li.nav-item
+          a.nav-link href="#"  Link
+        li.nav-item
+          a.nav-link.disabled href="#"  Disabled
+      - if current_user&.current_retailer
+        ul.navbar.navbar-nav.navbar-right
+          li.nav-item.dropdown
+            a.nav-link.dropdown-toggle#navbarDropdown data-toggle='dropdown' role='button' href='#' #{current_user.current_retailer.name}
+            .dropdown-menu aria-labelledby='navbarDropdown'
+              = link_to 'Instagram Media', dashboard_instagram_media_path, class: 'dropdown-item'
+              = link_to 'Settings', dashboard_settings_path, class: 'dropdown-item'

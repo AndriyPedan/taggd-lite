@@ -1,0 +1,6 @@
+div.form-check.ml-3
+  = check_box_tag 'product[category_ids][]', category.id, false, class: 'form-check-input check_boxes optional', id: "product_category_ids_#{category.id}"
+  = label_tag "product_category_ids_#{category.id}", category.name, class: 'collection_check_boxes'
+  - if category.subcategories.any?
+    - category.subcategories.each do |subcategory|
+      = render partial: 'category', locals: { category: subcategory }

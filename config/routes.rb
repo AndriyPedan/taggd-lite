@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   resources :subscriptions, only: :create
 
   namespace :dashboard do
-    resources :instagram_media, only: [:index, :create]
+    resources :instagram_media, only: %i(index create)
+    resources :settings, only: :index
     resources :media do
       resources :products
     end
