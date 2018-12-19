@@ -8,7 +8,27 @@ class MediaService < BaseService
     end
   end
 
+  def create_media_collection
+    media_collection.each do |media_string|
+      media_item = JSON.parse(media_string)
+      type = media_type(media_item['media_type'])
+      media = type.from_hash(media_item.merge({ status: status }.stringify_keys))
+      media.retailer = current_retailer
+      media.save
+    end
+  end
+
+  def build_media
+    media_item = media_type(media[:media_type]).from_hash(media.merge(status: status))
+    media_item.retailer = current_retailer
+    media_item
+  end
+
   private
+
+  def media_type(type)
+    type.downcase.camelcase.constantize
+  end
 
   def persisted_media_ids
     Media.pluck(:instagram_id)

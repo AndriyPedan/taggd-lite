@@ -35,7 +35,7 @@ RSpec.describe Dashboard::InstagramMediaController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:params) { { media: media_array.first, status: :active } }
+    let(:params) { { 'media_collection[]' => media_array.first.to_json, status: :active } }
 
     before do
       post :create, params: params
@@ -44,40 +44,6 @@ RSpec.describe Dashboard::InstagramMediaController, type: :controller do
     context 'success' do
       it 'creates media successfuly' do
         expect(response).to redirect_to(dashboard_media_index_path(status: 'active'))
-      end
-    end
-  end
-
-  describe 'POST bulk action' do
-    let(:media_collection) do
-      ['{"caption"=>"Tōto sundai", "like_count"=>3, "media_url"=>"https://scontent.xx.fbcdn.net/v/t51.2885-15/47076380_568669026930966_221561669357239164_n.jpg?_nc_cat=105&_nc_ht=scontent.xx&oh=bec05a3d20df760ca424cde71a48c78a&oe=5C8D9DD9", "media_type"=>"IMAGE","ig_id"=>"1935864350210159259", "permalink"=>"https://www.instagram.com/p/Brdkl6vnnKb/", "timestamp"=>"2018-12-16T20:43:55+0000", "username"=>"all_views_of_mount_fuji", "id"=>"17985149905190798"}',
-       '{"caption"=>"Sanka hakuu", "like_count"=>2, "media_url"=>"https://scontent.xx.fbcdn.net/v/t51.2885-15/46350187_140237693631552_7162516671978591219_n.jpg?_nc_cat=110&_nc_ht=scontent.xx&oh=a769478f09632d1f38adc56659e06003&oe=5C9837AB", "media_type"=>"IMAGE", "ig_id"=>"1932915527829589953", "permalink"=>"https://www.instagram.com/p/BrTGG55Ho_B/", "timestamp"=>"2018-12-12T19:05:08+0000", "username"=>"all_views_of_mount_fuji", "id"=>"17985322240185746"}']
-    end
-    let(:params) { { media_collection: media_collection, commit: 'Accept selected' } }
-
-    before do
-      post :batch_action, params: params
-    end
-
-    context 'accept' do
-      it 'creates media successfuly' do
-        expect(response).to redirect_to(dashboard_media_index_path(status: 'active'))
-      end
-    end
-
-    context 'reject' do
-      let(:params) { { media_collection: media_collection, commit: 'Reject selected' } }
-
-      it 'creates media successfuly' do
-        expect(response).to redirect_to(dashboard_media_index_path(status: 'rejected'))
-      end
-    end
-
-    context 'error' do
-      let(:params) { {} }
-
-      it 'nothing is created' do
-        expect(response).to redirect_to(dashboard_instagram_media_path)
       end
     end
   end
