@@ -29,5 +29,9 @@
           = f.input :availability
         .col-4
           = f.input :gender, collection: Product.genders.keys, include_blank: false
-      = f.association :categories, as: :check_boxes
+      fieldset.form-group.check_boxes.optional.product_categories
+        legend.col-form-label.pt-0 Categories
+        = hidden_field_tag 'product[category_ids][]'
+        - Category.where(parent_id: nil).each do |category|
+          = render partial: 'category', locals: { category: category }
       = f.button :submit

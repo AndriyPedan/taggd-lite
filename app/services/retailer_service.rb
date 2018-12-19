@@ -8,7 +8,7 @@ class RetailerService < BaseService
 
   def set_retailer
     user.retailers.update_all(current: false)
-    r = user.retailers.create_with(retailer_params)
+    r = user.retailers.create_with(token: retailer_params[:token])
             .find_or_create_by(business_id: retailer_params['business_id'])
     r.update(current: true, token: retailer_params['token'])
   end
