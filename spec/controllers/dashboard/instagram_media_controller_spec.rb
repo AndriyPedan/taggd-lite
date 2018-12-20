@@ -35,7 +35,7 @@ RSpec.describe Dashboard::InstagramMediaController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:params) { { media: media_array.first, status: :active } }
+    let(:params) { { 'media_collection[]' => media_array.first.to_json, status: :active } }
 
     before do
       post :create, params: params

@@ -8,6 +8,9 @@ class SimpleCovHelper
         ENV.fetch('SKIP_COVERAGE_CHECK', 'false')
       )
 
+      add_filter '/app/channels'
+      add_filter '/app/mailers'
+      add_filter '/app/admin/'
       add_filter '/spec/'
       add_filter '/config/'
       add_filter '/vendor/'

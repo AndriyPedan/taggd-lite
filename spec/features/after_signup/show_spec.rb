@@ -25,6 +25,7 @@ feature 'After signup page', js: true do
         business_id: '17841409430992073'
       }.to_json }
     end
+    let!(:retailer) { create(:retailer, current: true) }
 
     before do
       allow_any_instance_of(RetailerService).to receive(:build_retailers) { business_accounts }
@@ -34,6 +35,7 @@ feature 'After signup page', js: true do
     scenario 'select business account' do
       expect(page).to have_content('Business account')
       select 'Tagg Tag', from: 'user[retailer][business_id]'
+      user.current_retailer = retailer
       click_button('Next')
       expect(page).to have_content('Subscription plan')
     end
